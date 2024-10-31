@@ -1,0 +1,806 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+@media (max-width: 600px) {
+    /* Ajustes do header */ 
+}
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #e6a904;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+main {
+    min-height: 100vh; /* Garante que o main ocupe pelo menos a altura da tela */
+}
+
+
+header img {
+    max-width: 60px;
+    display: relative; /* 'relative' não é um valor válido aqui, use 'block' se necessário */
+    top: 10px;
+    margin-right: 5px;
+}
+
+header h1 a.as:hover {
+    transform: translateY(-5px); /* Faz o texto subir */
+    transition: transform 0.2s; /* Define a duração da animação */
+}
+
+header h1 a.as {
+    display: flex;
+    align-items: center;
+    color: #333333;
+    text-decoration: none;
+    font-size: 1.0em;
+    font-weight: bold;
+}
+
+
+header nav {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center; /* Centraliza o nav */
+}
+
+header nav ul {
+    display: flex;
+    justify-content: center; /* Centraliza os itens horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    gap: 35px; /* Espaçamento entre os itens */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza horizontalmente */
+}
+
+
+header nav ul li a {
+        display: flex;
+        flex-direction: column; /* Faz os itens dentro do link ficarem em coluna */
+        align-items: center; /* Centraliza horizontalmente */
+        text-decoration: none; /* Remove o sublinhado do link */
+        color: #333; /* Cor do texto */
+}
+
+header nav ul li a span {
+    margin-top: 5px; /* Espaço entre a imagem e o texto */
+    font-size: 0.9em; /* Ajuste o tamanho da fonte conforme necessário */
+    transition: transform 0.2s ease;
+}
+
+/* Efeito ao passar o mouse */
+header nav ul li a:hover span {
+    transform: scale(1.1); /* Aumenta o tamanho do texto ao passar o mouse */
+}
+
+
+
+header nav ul li a img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.2s ease;
+    margin-left: 5px;
+    border-radius: 10px;
+}
+
+nav a, .cart-icon-link {
+    text-decoration: none;
+    color: #333;
+}
+
+header nav ul li a:hover img {
+    transform: scale(1.1); /* Leve zoom ao passar o mouse */
+}
+
+main {
+    padding: 20px;
+    
+}
+
+.produto {
+    border: 1px solid #e6a904;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.produto img {
+    max-width: 80px;     /* Define o tamanho da imagem */
+    height: auto;
+    border-radius: 10px;  /* Suaviza as bordas */
+    margin-right: 5px;   /* Espaço entre a imagem e o texto */
+    }
+
+button {
+    background-color: #ffcc00; /* Amarelo */
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ffbb00; /* Amarelo mais escuro */
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #f1f1f1;
+}
+
+footer img {
+    max-width: 35px; /* Define o tamanho da imagem */
+    height: auto;
+    margin-right: 5px;
+}
+
+.cart-icon {
+    position: absolute; /* Permite o posicionamento no canto */
+    top: 10px; /* Distância do topo */
+    right: 50px; /* Distância da direita */
+    width: 30px; /* Ajuste a largura conforme necessário */
+    height: 30px; /* Mantém a proporção da imagem */
+    transition: transform 0.2s ease; /* Animação suave na transformação */
+}
+
+/* Efeito ao passar o mouse sobre o link que contém o ícone */
+.cart-icon-link:hover .cart-icon {
+    transform: scale(1.1); /* Aumenta o tamanho do ícone em 10% */
+}
+
+
+header .profile-img {
+    position: absolute; /* Permite o posicionamento no canto */
+    top: 10px; /* Distância do topo */
+    right: 10px; /* Distância da direita */
+    width: 30px; /* Ajuste a largura conforme necessário */
+    height: auto; /* Mantém a proporção da imagem */
+}
+
+/* Estilos para a tela de perfil */
+.profile-container {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #000000;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.info-details h3 {
+    margin: 0;
+}
+
+.order-history {
+    margin-top: 20px;
+}
+
+.order-history h3 {
+    margin-bottom: 10px;
+}
+
+.order-history ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.order-history li {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.profile-actions {
+    margin-top: 20px;
+}
+
+.profile-actions button {
+    margin-right: 10px;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#editForm {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+#editForm label {
+    display: block;
+    margin-top: 10px;
+}
+
+#editForm input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+}
+
+.profile-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover; /* Para manter a proporção */
+}
+
+#editForm {
+    display: none;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #e9ecef;
+}
+
+#editForm label {
+    display: block;
+    margin-top: 10px;
+}
+
+#editForm input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+}
+
+#cartItems {
+    padding: 20px;
+}
+
+.cart-item {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    align-items: center;
+}
+
+.cart-item-img {
+    max-width: 100px; /* Ajuste o tamanho da imagem conforme necessário */
+    height: auto;
+    border-radius: 5px; /* Suaviza as bordas */
+    margin-right: 15px; /* Espaço entre a imagem e os detalhes */
+}
+
+.cart-item-details {
+    flex-grow: 1; /* Faz os detalhes ocuparem o espaço restante */
+}
+
+.cart-item button {
+    background-color: #ffcc00; /* Amarelo */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.cart-item button:hover {
+    background-color: #ffbb00; /* Amarelo mais escuro */
+}
+
+.cart-total {
+    margin-top: 20px;
+    text-align: right; /* Alinha o total à direita */
+}
+
+#checkout, #continue-shopping {
+    background-color: #ffcc00; /* Amarelo */
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+#checkout:hover, #continue-shopping:hover {
+    background-color: #ffbb00; /* Amarelo mais escuro */
+}
+
+/* Estilos para o histórico de pedidos */
+#ordersContainer {
+    margin-top: 20px;
+}
+
+.order {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9; /* Cor de fundo clara */
+}
+
+.order h3 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #ffcc00; /* Cor do título */
+}
+
+.order p {
+    margin: 5px 0;
+}
+
+.order-items {
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    padding: 5px 0;
+}
+
+.order-item-name {
+    flex: 1;
+}
+
+.order-item-price {
+    font-weight: bold;
+}
+
+/* Estilo para o botão de reordenar */
+.reorder-button {
+    background-color: #ffcc00; /* Amarelo */
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.reorder-button:hover {
+    background-color: #ffbb00; /* Amarelo mais escuro */
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .order {
+        padding: 10px;
+    }
+
+    .order h3 {
+        font-size: 1.2em;
+    }
+
+    .reorder-button {
+        width: 100%; /* Botão ocupa toda a largura em telas pequenas */
+    }
+}
+
+.cupom-container {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.cupom-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.cupom-container label {
+    margin-bottom: 5px;
+}
+
+.cupom-container input {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.cupom-container button {
+    background-color: #ffcc00; /* Amarelo */
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.cupom-container button:hover {
+    background-color: #ffbb00; /* Amarelo mais escuro */
+}
+
+.resultado {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.cupom-lista {
+    margin-top: 20px;
+}
+
+.cupom {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9; /* Cor de fundo clara */
+}
+
+.contact-section {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contact-section h2 {
+    color: #ffcc00; /* Amarelo */
+    margin-bottom: 15px;
+}
+
+.contact-section p {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.whatsapp-btn {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #25d366; /* Cor padrão do WhatsApp */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.whatsapp-btn:hover {
+    background-color: #1ebe57; /* Escurece um pouco o botão ao passar o mouse */
+}
+
+/* Container principal */
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Título principal */
+.profile-container h1 {
+    font-size: 1.8em;
+    color: #333;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.profile-container p {
+    text-align: center;
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Seções gerais */
+.section {
+    background-color: #f9f9f9;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+/* Horários */
+.horarios {
+    list-style-type: none;
+    padding: 0;
+    font-size: 0.95em;
+    color: #444;
+}
+
+.horarios li {
+    margin: 5px 0;
+}
+
+/* Formas de pagamento */
+.formas-pagamento {
+    display: flex;
+    flex-direction: column;
+}
+
+.forma {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 8px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.forma:hover {
+    background-color: #f1f1f1;
+}
+
+.forma img {
+    width: 28px;
+    height: 28px;
+    margin-right: 12px;
+}
+
+.forma span {
+    font-size: 0.95em;
+    color: #444;
+}
+
+/* Endereço */
+.section p {
+    font-size: 0.95em;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .profile-container {
+        padding: 15px;
+    }
+
+    .forma {
+        padding: 10px;
+    }
+}
+
+/* Estilização do link do mapa */
+.map-link {
+    color: #333; /* Cor do texto */
+    text-decoration: none; /* Remove o sublinhado */
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Efeito ao passar o mouse */
+.map-link:hover {
+    background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+    color: #007BFF; /* Muda a cor do texto para indicar que é clicável */
+}
+
+/* style.css */
+
+/* Containers principais */
+.header-container {
+    background-color: #f8f9fa; /* Exemplo de cor para header */
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.checkout-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff; /* Mantendo o fundo branco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Estilos para cada seção de checkout */
+/* Estilos para o resumo final */
+.checkout-step {
+    background-color: #f9f9f9; /* Fundo claro */
+    border: 1px solid #ccc; /* Borda suave */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 20px; /* Espaçamento interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.checkout-step h2 {
+    color: #333; /* Cor do título */
+    font-size: 1.6em; /* Tamanho do título */
+    margin-bottom: 15px; /* Espaçamento abaixo do título */
+    border-bottom: 2px solid #ffcc00; /* Linha embaixo do título */
+    padding-bottom: 10px; /* Espaçamento interno abaixo do título */
+}
+
+.checkout-step p {
+    font-size: 1.1em; /* Tamanho do texto */
+    color: #555; /* Cor do texto */
+    margin: 5px 0; /* Espaçamento entre parágrafos */
+}
+
+.checkout-summary-item {
+    display: flex; /* Layout flexível */
+    justify-content: space-between; /* Espaço entre os itens */
+    padding: 10px 0; /* Espaçamento interno */
+    border-bottom: 1px solid #eee; /* Linha divisória */
+}
+
+.checkout-summary-item:last-child {
+    border-bottom: none; /* Remove a linha do último item */
+}
+
+.final-total {
+    font-size: 1.3em; /* Tamanho do total final */
+    color: #ffcc00; /* Cor do total */
+    font-weight: bold; /* Negrito */
+    text-align: right; /* Alinha à direita */
+    margin-top: 10px; /* Espaçamento acima do total */
+}
+
+.btn {
+    background-color: #ffcc00; /* Cor principal do botão */
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%; /* Botão ocupa toda a largura */
+}
+
+.btn:hover {
+    background-color: #ffbb00; /* Cor de hover */
+}
+
+.btn-secondary {
+    background-color: #f44336; /* Cor do botão secundário */
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.btn-secondary:hover {
+    background-color: #c62828; /* Hover botão secundário */
+}
+
+/* Estilos para os campos de entrada */
+textarea, input[type="text"] {
+    width: 100%; /* Largura total */
+    padding: 12px; /* Aumento do padding para conforto */
+    border: 2px solid #ccc; /* Borda mais grossa */
+    border-radius: 5px; /* Bordas arredondadas */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Transição suave */
+    font-size: 1em; /* Tamanho da fonte */
+    margin-bottom: 15px; /* Espaçamento abaixo */
+}
+
+/* Estilos para foco nos campos de entrada */
+textarea:focus, input[type="text"]:focus {
+    border-color: #ffcc00; /* Cor da borda ao focar */
+    box-shadow: 0 0 5px rgba(255, 204, 0, 0.5); /* Sombra ao focar */
+    outline: none; /* Remove o contorno padrão */
+}
+
+/* Estilos para os rótulos dos campos */
+.form-group label {
+    display: block; /* Rótulo ocupa a largura total */
+    font-weight: bold; /* Negrito */
+    margin-bottom: 5px; /* Espaçamento abaixo do rótulo */
+    color: #555; /* Cor do texto do rótulo */
+}
+
+.cupomlow { 
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #ffffff;
+        position: relative; /* ou absolute */
+        left: 432px; /* Alinha à direita do contêiner */
+        text-align: right;
+    }
+
+.contato {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9; /* Cor de fundo clara */
+}
+
+.historico {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9; /* Cor de fundo clara */
+}
+
+.cardapio {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9; /* Cor de fundo clara */
+}
+
+.home {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9; /* Cor de fundo clara */
+}
+    
+
+
+

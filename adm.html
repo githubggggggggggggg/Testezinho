@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin-styles.css">
+    <title>Q'Delícia - Área Administrativa</title>
+</head>
+<body>
+    <header>
+        <h1>Área Administrativa - Q'Delícia</h1>
+        <nav>
+            <ul>
+                <li><a href="#" id="ordersTab">Pedidos</a></li>
+                <li><a href="#" id="deliverersTab">Entregadores</a></li>
+                <li><a href="#" id="couponsTab">Cupons</a></li>
+                <li><a href="#" id="salesTab">Recuperar Vendas</a></li>
+                <li><a href="#" id="scheduleTab">Agendar Pedido</a></li>
+                <li><a href="#" id="supportTab">Suporte Online</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="ordersSection">
+            <h2>Pedidos</h2>
+            <div id="ordersContainer"></div>
+        </section>
+
+        <section id="deliverersSection" style="display: none;">
+            <h2>Entregadores</h2>
+            <div id="deliverersContainer"></div>
+            <input type="text" id="delivererName" placeholder="Nome do Entregador" required>
+            <input type="text" id="delivererContact" placeholder="Contato do Entregador" required>
+            <button id="addDelivererBtn">Adicionar Entregador</button>
+        </section>
+
+        <section id="couponsSection" style="display: none;">
+            <h2>Cupom de Desconto</h2>
+            <input type="text" id="couponCode" placeholder="Código do Cupom" required>
+            <input type="number" id="discountValue" placeholder="Valor do Desconto (%)" min="0" max="100" required>
+            <button id="createCouponBtn">Criar Cupom</button>
+            <h3>Cupons Criados</h3>
+            <div id="couponsContainer"></div>
+        </section>
+
+        <section id="salesSection" style="display: none;">
+            <h2>Recuperar Vendas</h2>
+            <button id="recoverSalesBtn">Recuperar Vendas</button>
+            <div id="salesContainer"></div>
+        </section>
+
+        <section id="scheduleSection" style="display: none;">
+            <h2>Agendamento de Pedidos</h2>
+            <button id="scheduleOrderBtn">Agendar Pedido</button>
+        </section>
+
+        <section id="supportSection" style="display: none;">
+            <h2>Suporte Online</h2>
+            <button id="supportOnlineBtn">Abrir Suporte</button>
+        </section>
+
+        <section id="reportSection" style="display: none;">
+            <h2>Relatório de Pedidos</h2>
+            <div>
+                <label for="dateRange">Período:</label>
+                <input type="date" id="startDate">
+                <input type="date" id="endDate">
+                <button id="filterReportBtn">Filtrar</button>
+            </div>
+            <div id="reportContainer">
+                <canvas id="ordersChart" width="400" height="200"></canvas>
+                <h3>Lucro Total: R$ <span id="totalProfit">0.00</span></h3>
+            </div>
+            <h3>Lista de Pedidos</h3>
+            <input type="text" id="searchOrders" placeholder="Buscar por ID ou nome...">
+            <div id="ordersListContainer"></div>
+        </section>
+        
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            loadOrders();
+            loadDeliverers();
+            loadCoupons();
+            showSection('ordersSection');
+
+            const tabs = ['ordersTab', 'deliverersTab', 'couponsTab', 'salesTab', 'scheduleTab', 'supportTab'];
+            tabs.forEach(tab => {
+                document.getElementById(tab).addEventListener("click", function(event) {
+                    event.preventDefault();
+                    showSection(tab.replace('Tab', 'Section'));
+                });
+            });
+
+            document.getElementById("createCouponBtn").addEventListener("click", createCoupon);
+            document.getElementById("addDelivererBtn").addEventListener("click", addDeliverer);
+        });
+
+        function showSection(sectionId) {
+            const sections = ['ordersSection', 'deliverersSection', 'couponsSection', 'salesSection', 'scheduleSection', 'supportSection'];
+            sections.forEach(id => {
+                document.getElementById(id).style.display = (id === sectionId) ? 'block' : 'none';
+            });
+        }
+
+        function loadOrders() {
+            const orders = JSON.parse(localStorage.getItem("adminOrders")) || [];
+            const ordersContainer = document.getElementById("ordersContainer");
+            ordersContainer.innerHTML = "";
+
+            if (orders.length === 0) {
+                ordersContainer.innerHTML = "<p>Nenhum pedido encontrado.</p>";
+            } else {
+                orders.forEach(order => {
+                    const orderDiv = document.createElement('div');
+                    orderDiv.className = 'order';
+                    orderDiv.innerHTML = `
+                        <h3>ID do Pedido: ${order.id}</h3>
+                        <p><strong>Total:</strong> R$ ${order.total}</p>
+                        <p><strong>Data:</strong> ${order.date}</p>
+                        <p><strong>Itens:</strong></p>
+                        <ul>
+                            ${order.items.map(item => `<li>${item.name} - R$ ${item.price.toFixed(2)} (Quantidade: ${item.quantity || 1})</li>`).join('')}
+                        </ul>
+                        <p><strong>Status:</strong> <span id="status-${order.id}">${order.status}</span></p>
+                        <button onclick="printOrder(${order.id})">Imprimir Pedido</button>
+                        <button onclick="advanceOrder(${order.id})">Avançar Pedido</button>
+                    `;
+                    ordersContainer.appendChild(orderDiv);
+                });
+            }
+        }
+
+        function printOrder(orderId) {
+    const orders = JSON.parse(localStorage.getItem("adminOrders")) || [];
+    const order = orders.find(o => o.id === orderId);
+
+    if (order) {
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <html>
+                <head>
+                    <title>Pedido #${order.id}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; }
+                        .header { text-align: center; }
+                        .order-details { margin: 20px; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <img src="logoc.png" alt="Logo Q'Delícia" />
+                        <h1>Detalhes do Pedido #${order.id}</h1>
+                    </div>
+                    <div class="order-details">
+                        <p><strong>Total:</strong> R$ ${order.total}</p>
+                        <p><strong>Data:</strong> ${order.date}</p>
+                        <p><strong>Endereço:</strong> ${order.endereco || 'Indefinido'}</p>
+                        <p><strong>Observações:</strong> ${order.observations || 'Nenhuma'}</p>
+                        <p><strong>Forma de Pagamento:</strong> ${order.pagamento || 'Indefinido'}</p>
+                        <p><strong>Usuário:</strong> ${order.isLoggedIn || 'Indefinido'}</p>
+                        <p><strong>Número WhatsApp:</strong> ${order.whatsapp || 'Indefinido'}</p>
+                        <h4>Itens:</h4>
+                        <ul>
+                            ${order.items.map(item => `
+                                <li>${item.name} - R$ ${item.price.toFixed(2)} (Quantidade: ${item.quantity || 1})</li>
+                            `).join('')}
+                        </ul>
+                        <p><strong>Status:</strong> ${order.status}</p>
+                        <p>Obrigado por escolher Q'Delícia!</p>
+                    </div>
+                </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+    } else {
+        alert("Pedido não encontrado.");
+    }
+}
+
+
+
+        function advanceOrder(orderId) {
+            const orders = JSON.parse(localStorage.getItem("adminOrders"));
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                if (order.status === "Aceito") {
+                    order.status = "Em Produção";
+                } else if (order.status === "Em Produção") {
+                    order.status = "Entregue";
+                }
+                localStorage.setItem("adminOrders", JSON.stringify(orders));
+                loadOrders(); // Atualiza a lista de pedidos
+            }
+        }
+
+        function loadDeliverers() {
+            const deliverers = JSON.parse(localStorage.getItem("deliverers")) || [];
+            const deliverersContainer = document.getElementById("deliverersContainer");
+            deliverersContainer.innerHTML = "";
+
+            if (deliverers.length === 0) {
+                deliverersContainer.innerHTML = "<p>Nenhum entregador cadastrado.</p>";
+            } else {
+                deliverers.forEach(deliverer => {
+                    deliverersContainer.innerHTML += `
+                        <div class="deliverer">
+                            <p><strong>Nome:</strong> ${deliverer.name}</p>
+                            <p><strong>Contato:</strong> ${deliverer.contact}</p>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function addDeliverer() {
+            const delivererName = document.getElementById("delivererName").value.trim();
+            const delivererContact = document.getElementById("delivererContact").value.trim();
+
+            if (!delivererName || !delivererContact) {
+                alert("Por favor, preencha todos os campos.");
+                return;
+            }
+
+            const existingDeliverers = JSON.parse(localStorage.getItem("deliverers")) || [];
+            existingDeliverers.push({ name: delivererName, contact: delivererContact });
+            localStorage.setItem("deliverers", JSON.stringify(existingDeliverers));
+
+            alert(`Entregador ${delivererName} adicionado com sucesso.`);
+            document.getElementById("delivererName").value = "";
+            document.getElementById("delivererContact").value = "";
+
+            loadDeliverers(); // Atualiza a lista de entregadores
+        }
+
+        function createCoupon() {
+            const couponCode = document.getElementById("couponCode").value.trim();
+            const discountValue = document.getElementById("discountValue").value.trim();
+
+            if (!couponCode || !discountValue) {
+                alert("Por favor, preencha todos os campos.");
+                return;
+            }
+
+            const existingCoupons = JSON.parse(localStorage.getItem("coupons")) || {};
+            if (existingCoupons[couponCode]) {
+                alert("Este cupom já existe.");
+                return;
+            }
+
+            existingCoupons[couponCode] = { discount: Number(discountValue), active: true };
+            localStorage.setItem("coupons", JSON.stringify(existingCoupons));
+
+            alert(`Cupom ${couponCode} criado com desconto de ${discountValue}%.`);
+            document.getElementById("couponCode").value = "";
+            document.getElementById("discountValue").value = "";
+
+            loadCoupons(); // Atualiza a lista de cupons
+        }
+
+        function loadCoupons() {
+            const coupons = JSON.parse(localStorage.getItem("coupons")) || {};
+            const couponsContainer = document.getElementById("couponsContainer");
+            couponsContainer.innerHTML = "";
+
+            if (Object.keys(coupons).length === 0) {
+                couponsContainer.innerHTML = "<p>Nenhum cupom criado.</p>";
+            } else {
+                for (const [code, data] of Object.entries(coupons)) {
+                    if (data && data.discount) {
+                        const couponDiv = document.createElement('div');
+                        couponDiv.className = 'coupon';
+                        couponDiv.innerHTML = `<p><strong>Código:</strong> ${code} - <strong>Desconto:</strong> ${data.discount}%</p>`;
+                        couponsContainer.appendChild(couponDiv);
+                    }
+                }
+            }
+        }
+        
+    </script>
+</body>
+</html>

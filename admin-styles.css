@@ -1,0 +1,230 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+header {
+    background-color: #ffbb00; /* Amarelo do sistema */
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    margin: 20px 0;
+    background-color: #ffbb00; /* Amarelo do sistema */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #333; /* Escurece ao passar o mouse */
+}
+
+main {
+    padding: 20px;
+}
+
+section {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    color: #333; /* Cor do texto do título */
+    border-bottom: 2px solid #ffbb00; /* Linha de destaque embaixo do título */
+    padding-bottom: 10px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus {
+    border-color: #ffbb00; /* Amarelo foco */
+    outline: none;
+}
+
+button {
+    background-color: #28a745; /* Verde para botões */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #218838; /* Verde escuro no hover */
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #ffbb00;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.pedido-list {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.pedido-item {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.pedido-item:last-child {
+    border-bottom: none;
+}
+
+/* Estilos para a área de pedidos */
+.orders-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Espaçamento entre os pedidos */
+    justify-content: center; /* Centraliza os pedidos na linha */
+    margin-top: 20px; /* Espaço acima da área de pedidos */
+}
+
+.order {
+    background-color: #ffffff; /* Fundo branco para os cartões */
+    border: 1px solid #ddd; /* Borda suave */
+    padding: 15px; /* Espaçamento interno */
+    width: calc(30% - 20px); /* Ajusta a largura para três colunas */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    border-radius: 10px; /* Bordas arredondadas */
+    transition: transform 0.3s, box-shadow 0.3s; /* Efeitos de transição */
+    position: relative; /* Para posicionamento de elementos internos */
+}
+
+.order:hover {
+    transform: translateY(-5px); /* Eleva a caixa ao passar o mouse */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Sombra mais intensa ao passar o mouse */
+}
+
+.order h3 {
+    margin: 0; /* Remove espaço extra */
+    font-size: 1.2em; /* Aumenta o tamanho do título */
+    color: #333; /* Cor do texto do título */
+    padding-bottom: 10px; /* Espaçamento abaixo do título */
+}
+
+.order p {
+    margin: 5px 0; /* Espaçamento entre parágrafos */
+    color: #555; /* Cor do texto do corpo */
+}
+
+.order ul {
+    list-style-type: none; /* Remove marcadores da lista */
+    padding-left: 0; /* Remove espaçamento à esquerda */
+    margin: 10px 0; /* Espaçamento em torno da lista */
+}
+
+.order ul li {
+    padding: 5px 0; /* Espaçamento entre os itens */
+    border-bottom: 1px solid #eee; /* Linha separadora entre os itens */
+}
+
+.order ul li:last-child {
+    border-bottom: none; /* Remove a linha do último item */
+}
+
+/* Estilo para total e data */
+.order .total {
+    font-weight: bold; /* Destaque para o total */
+    color: #ffbb00; /* Amarelo para o total */
+    margin-top: 10px; /* Espaço acima do total */
+}
+
+.order .date {
+    position: absolute; /* Para posicionar no canto superior direito */
+    top: 10px;
+    right: 10px;
+    font-size: 0.8em; /* Tamanho menor para a data */
+    color: #777; /* Cor da data */
+}
+
+.deliverer {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: box-shadow 0.3s;
+}
+
+.deliverer:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Adicionando media queries para responsividade */
+@media (max-width: 768px) {
+    .order {
+        width: calc(45% - 20px); /* Ajusta para duas colunas em telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .order {
+        width: 100%; /* Ajusta para uma coluna em telas pequenas */
+    }
+}

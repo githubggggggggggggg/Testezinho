@@ -1,0 +1,170 @@
+<script>
+  // Função para redirecionar o usuário para a página de login
+  function redirectToLogin() {
+    window.location.href = "login.html"; 
+  }
+
+</script>
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Qdelicia - Delivery</title> 
+</head>
+<body>
+    <header>
+        <h1> 
+            <a href="index.html" class="as">
+                <img src="logoc.png" alt="logoq" class="logoq"> Q'Delícia
+            </a>
+        </h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="index.html">
+                        <img src="casa.png" alt="casinha">
+                        <span>Home</span>
+                    </a>
+                    
+                </li> 
+                <li>
+                    <a href="cardapio.html">
+                    <img src="prato.png" alt="prato" class="pratinho">
+                    <span>Cardápio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="historico.html">
+                    <img src="historico.png" alt="hist" class="hist">
+                    <span>Meus Pedidos</span>
+                    </a>
+                </li>  
+                <li><a href="contato.html">
+                    <img src="celular.png" alt="cell" class="celular">
+                    <span>Contato</span>
+                     </a>
+                </li>
+                <li>
+                    <a href="cupom.html">
+                        <img src="cupom.png" alt="cupom" class="celular">
+                        <span>Cupom</span> 
+                    </a>
+                <li>
+                    <a href="perfil.html" class="profile-link">
+                        <img src="perfil.png" alt="Perfil" class="profile-img">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <a href="carrinho.html" class="cart-icon-link"> 
+            <img src="icon.png" alt="Ícone do Carrinho" class="cart-icon">
+        </a>
+    </header>
+    
+    <main>
+        <h2>Cardápio</h2>
+        <div class="produto" id="produto1">
+            <img src="cardapio.png" alt="">
+            <h3>Turbinado</h3>
+            <p>Pão, carne, mussarela, presunto, ovo, frango, bacon, calabresa, batata e salada</p>
+            <p>Preço: R$ 18,00</p>
+            <button class="add-to-cart" data-id="1">Adicionar ao Carrinho</button>  
+        </div>
+
+        <div class="produto" id="produto2">
+            <img src="cardapio.png" alt="">
+            <h3>X-Burguer</h3>
+            <p>Pão, carne, mussarela, presunto e salada</p>
+            <p>Preço: R$ 8,00</p>
+            <button class="add-to-cart" data-id="2">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" id="produto3">
+            <img src="cardapio.png" alt="">
+            <h3>X-Calabresa</h3>
+            <p>Pão, carne, mussarela, presunto, calabresa, batata e salada</p>
+            <p>Preço: R$ 13,00</p>
+            <button class="add-to-cart" data-id="3">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" id="produto4">
+            <img src="cardapio.png" alt="">
+            <h3>X-Egg Burguer</h3>
+            <p>Pão, carne, mussarela, presunto, ovo, calabresa, batata e salada</p>
+            <p>Preço: R$ 15,00</p>
+            <button class="add-to-cart" data-id="4">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" id="produto5">
+            <img src="cardapio.png" alt="">
+            <h3>Tradicional</h3>
+            <p>Pão, carne e salada</p>
+            <p>Preço: R$ 7,00</p>
+            <button class="add-to-cart" data-id="5">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" id="produto6">
+            <img src="cardapio.png" alt="">
+            <h3>Calabresa Com Bacon</h3>
+            <p>Pão, carne, mussarela, presunto, calabresa, bacon, batata e salada</p>
+            <p>Preço: R$ 15,00</p>
+            <button class="add-to-cart" data-id="6">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" id="produto7">
+            <img src="cardapio.png" alt="">
+            <h3>Big Delícia</h3>
+            <p>Pão, 2 carnes, 2 mussarela, 2 presunto, 2 ovos, frango, bacon, calabresa, batata e salada</p>
+            <p>Preço: R$ 26,00</p>
+            <button class="add-to-cart" data-id="7">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" id="produto8">
+            <img src="cardapio.png" alt="">
+            <h3>X-Burguer Dog</h3>
+            <p>Pão, carne, mussarela, presunto, salsicha, batata e salada</p>
+            <p>Preço: R$ 10,00</p>
+            <button class="add-to-cart" data-id="8">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" id="produto9">
+            <img src="cardapio.png" alt="">
+            <h3>X-Bacon</h3>
+            <p>Pão, carne, mussarela, presunto, bacon, batata e salada</p>
+            <p>Preço: R$ 13,00</p>
+            <button class="add-to-cart" data-id="9">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" id="produto10">
+            <img src="cardapio.png" alt="">
+            <h3>Egg Burguer</h3>
+            <p>Pão, carne, ovo e salada</p>
+            <p>Preço: R$ 8,00</p>
+            <button class="add-to-cart" data-id="10">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="produto" id="produto11">
+                <img src="guaravitas.png" alt="">
+                <h3>Guaravita</h3>
+                <p>Quem bebe dá 10!</p>
+                <p>Preço: R$ 2,00</p>
+                <button class="add-to-cart" data-id="11">Adicionar ao Carrinho</button>
+
+            </div>
+
+        <!-- Adicione mais produtos conforme necessário -->
+    </main>
+
+    <footer>
+        <p>&copy; Desing by Sizzle Sistema - 2024 Qdelicia - Todos os direitos reservados.</p>
+        <p><a href="https://wa.me/5522992317045"><img src="logo.png" alt=""></a></p>
+        
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

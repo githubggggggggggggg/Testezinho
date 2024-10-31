@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Q'Delícia - Checkout</title>
+</head>
+<body>
+    <header>
+        <h1>
+            <a href="index.html" class="as">
+                <img src="logoc.png" alt="logoq" class="logoq"> Q'Delícia
+            </a>
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cardapio.html">Cardápio</a></li>
+                <li><a href="historico.html">Meus Pedidos</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="cupom.html">Cupom</a></li>
+                <li><a href="perfil.html" class="profile-link">Perfil</a></li>
+            </ul>
+        </nav>
+        <a href="carrinho.html" class="cart-icon-link">
+            <img src="icon.png" alt="Ícone do Carrinho" class="cart-icon">
+        </a>
+    </header>
+
+    <main class="checkout-container">
+        <div class="form-group">
+            <label for="whatsapp">Número do WhatsApp:</label>
+            <input type="text" id="whatsapp" placeholder="Digite seu número com DDD">
+        </div>
+
+        <section class="checkout-step" id="step-1">
+            <h2>Resumo do Pedido e Observações</h2>
+            <div id="orderSummary"></div>
+            <div class="form-group">
+                <label for="observacoes">Observações:</label>
+                <textarea id="observacoes" placeholder="Ex.: Retirar cebola, adicionar molho extra..."></textarea>
+            </div>
+            <button class="btn" onclick="nextStep(2)">Próximo</button>
+        </section>
+
+        <section class="checkout-step" id="step-2" style="display: none;">
+            <h2>Endereço de Entrega</h2>
+            <div class="form-group">
+                <label for="endereco">Endereço:</label>
+                <input type="text" id="endereco" placeholder="Ex: Rua, Bairro, Número">
+            </div>
+            <button class="btn" onclick="nextStep(3)">Próximo</button>
+            <button class="btn-secondary" onclick="previousStep(1)">Voltar</button>
+        </section>
+
+        <section class="checkout-step" id="step-3" style="display: none;">
+            <h2>Forma de Pagamento</h2>
+            <div class="form-group">
+                <label><input type="checkbox" id="pagamento-dinheiro"> Dinheiro na entrega</label>
+                <label><input type="checkbox" id="pagamento-cartao"> Cartão de crédito</label>
+                <label><input type="checkbox" id="pagamento-pix"> Pix</label>
+                <label><input type="checkbox" id="pagamento-vr"> VR Refeição</label>
+            </div>
+            <button class="btn" onclick="nextStep(4)">Próximo</button>
+            <button class="btn-secondary" onclick="previousStep(2)">Voltar</button>
+        </section>
+
+        <section class="checkout-step" id="step-4" style="display: none;">
+            <h2>Resumo Final</h2>
+            <div id="final-produto-list"></div>
+            <p><strong>Observações:</strong> <span id="final-observacoes"></span></p>
+            <p><strong>Endereço:</strong> <span id="final-endereco"></span></p>
+            <p><strong>Forma de Pagamento:</strong> <span id="final-pagamento"></span></p>
+            <p><strong>Total:</strong> R$<span id="final-valor-total"></span></p>
+            <button class="btn" onclick="confirmOrder()">Confirmar Pedido</button>
+            <button class="btn-secondary" onclick="previousStep(3)">Voltar</button>
+        </section>
+    </main>
+
+    <script>
+        const deliveryFee = 4.00;
+
+        document.addEventListener("DOMContentLoaded", function() {
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const orderSummaryContainer = document.getElementById("orderSummary");
+            let total = 0;
+
+            if (cart.length === 0) {
+                orderSummaryContainer.innerHTML = "<p>O carrinho está vazio.</p>";
+                return;
+            }
+
+            cart.forEach(item => {
+                total += item.price;
+                orderSummaryContainer.innerHTML += `
+                    <p>${item.name} - R$ ${item.price.toFixed(2)} (Quantidade: 1)</p>
+                `;
+            });
+
+            document.getElementById("final-valor-total").innerText = total.toFixed(2);
+        });
+
+        function nextStep(step) {
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`step-${i}`).style.display = (i === step) ? 'block' : 'none';
+            }
+
+            if (step === 4) {
+                const cart = JSON.parse(localStorage.getItem("cart")) || [];
+                const finalProdutoList = document.getElementById("final-produto-list");
+                finalProdutoList.innerHTML = ""; // Limpa a lista antes de preencher
+
+                if (cart.length === 0) {
+                    finalProdutoList.innerHTML = "<p>Nenhum item no carrinho.</p>";
+                } else {
+                    cart.forEach(item => {
+                        finalProdutoList.innerHTML += `
+                            <p>${item.name} - R$ ${item.price.toFixed(2)} (Quantidade: 1)</p>
+                        `;
+                    });
+                }
+
+                // Coletando e exibindo as observações e endereço
+                const observacoes = document.getElementById("observacoes").value;
+                const endereco = document.getElementById("endereco").value;
+
+                document.getElementById("final-observacoes").innerText = observacoes || "Nenhuma";
+                document.getElementById("final-endereco").innerText = endereco || "Não informado";
+
+                // Forma de Pagamento
+                const formaPagamento = [];
+                if (document.getElementById("pagamento-dinheiro").checked) formaPagamento.push("Dinheiro na entrega");
+                if (document.getElementById("pagamento-cartao").checked) formaPagamento.push("Cartão de crédito");
+                if (document.getElementById("pagamento-pix").checked) formaPagamento.push("Pix");
+                if (document.getElementById("pagamento-vr").checked) formaPagamento.push("VR Refeição");
+
+                document.getElementById("final-pagamento").innerText = formaPagamento.join(", ") || "Nenhuma forma de pagamento selecionada";
+            }
+        }
+
+        function previousStep(step) {
+            nextStep(step);
+        }
+
+        function confirmOrder() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const orderId = Date.now();
+            const whatsappNumber = document.getElementById("whatsapp").value || "Não informado";
+            const endereco = document.getElementById("endereco").value || "Não informado";
+            const observacoes = document.getElementById("observacoes").value || "Nenhuma";
+
+            const totalProdutos = cart.reduce((sum, item) => sum + item.price, 0);
+            const totalComTaxa = totalProdutos + deliveryFee;
+
+            const order = {
+                id: orderId,
+                date: new Date().toLocaleDateString(),
+                total: totalComTaxa.toFixed(2),
+                endereco: endereco,
+                observacoes: observacoes,
+                whatsapp: whatsappNumber,
+                items: cart,
+                status: "Aceito"
+            };
+
+            // Armazenar o pedido para o admin
+            let adminOrders = JSON.parse(localStorage.getItem("adminOrders")) || [];
+            adminOrders.push(order);
+            localStorage.setItem("adminOrders", JSON.stringify(adminOrders));
+
+            // Aqui você pode adicionar o código para enviar uma mensagem via WhatsApp, se necessário.
+            fetch('http://localhost:5000/send-message', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            phone_number: whatsappNumber,
+            order_code: orderId,
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.status);
+        localStorage.removeItem("cart");
+        window.location.href = "historico.html"; // Redireciona para o histórico de pedidos
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        alert("Erro ao enviar a mensagem.");
+    });
+}
+
+{
+            alert("Pedido confirmado! ID: " + orderId);
+            localStorage.removeItem("cart");
+            window.location.href = "historico.html"; // Redireciona para o histórico de pedidos
+        }
+    </script>
+</body>
+</html>

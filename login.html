@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Qdelicia - Delivery</title>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <img src="logoc.png" alt="Logo" class="logo">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" name="username" placeholder="Digite seu usuário" required autocomplete="username">
+
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" placeholder="Digite sua senha" required autocomplete="current-password">
+
+            <button type="submit">Entrar</button>
+        </form>
+
+        <div class="links">
+            <a href="cadastro.html" id="registerLink">Registrar Usuário</a>
+            <a href="#" id="forgotPasswordLink">Esqueci a Senha</a>
+        </div>
+
+        <p id="loginMessage"></p> <!-- Mensagem de erro ou sucesso -->
+    </div>
+
+    <footer>
+        <p>&copy; Design by Sizzle Sistema - 2024 Qdelicia - Todos os direitos reservados.</p>
+        <p><a href="https://wa.me/5522992317045"><img src="logo.png" alt="WhatsApp Logo"></a></p>
+    </footer>
+
+    <script src="script.js"></script> <!-- Referência ao arquivo JS -->
+</body>
+
+</html>

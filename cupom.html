@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Q'Delícia - Delivery</title> 
+</head>
+<body>
+    <header>
+        <h1> 
+            <a href="index.html" class="as">
+                <img src="logoc.png" alt="logoq" class="logoq"> Q'Delícia
+            </a>
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="index.html"><img src="casa.png" alt="casinha"><span>Home</span></a></li> 
+                <li><a href="cardapio.html"><img src="prato.png" alt="prato" class="pratinho"><span>Cardápio</span></a></li>
+                <li><a href="historico.html"><img src="historico.png" alt="hist" class="hist"><span>Meus Pedidos</span></a></li>  
+                <li><a href="contato.html"><img src="celular.png" alt="cell" class="celular"><span>Contato</span></a></li>
+                <li><a href="cupom.html"><img src="cupom.png" alt="cupom" class="celular"><span>Cupom</span></a></li>
+                <li><a href="perfil.html" class="profile-link"><img src="perfil.png" alt="Perfil" class="profile-img"></a></li>
+            </ul>
+        </nav>
+        <a href="carrinho.html" class="cart-icon-link"> 
+            <img src="icon.png" alt="Ícone do Carrinho" class="cart-icon">
+        </a>
+    </header>
+
+    <main>
+        <h2>Aplicar Cupom de Desconto</h2>
+        <div class="cupom-container">
+            <form id="cupomForm">
+                <label for="codigoCupom">Código do Cupom:</label>
+                <input type="text" id="codigoCupom" placeholder="Insira seu código aqui" required>
+                <button type="submit">Aplicar</button>
+            </form>
+            <div id="resultado" class="resultado"></div>
+            <div id="mensagemCupom" class="mensagem-cupom"></div>
+        </div>
+
+        <h3>Cupons Disponíveis</h3>
+        <div class="cupom-lista" id="cupomLista"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Q'Delícia. Todos os direitos reservados.</p>
+    </footer>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const codigoCupom = localStorage.getItem('appliedCoupon');
+            const lastUsedDate = localStorage.getItem('lastUsedDate');
+            const currentDate = new Date();
+
+            // Verifica se o cupom foi utilizado na semana atual
+            if (codigoCupom) {
+                const lastDate = new Date(lastUsedDate);
+                const weeksDifference = Math.floor((currentDate - lastDate) / (1000 * 60 * 60 * 24 * 7));
+                
+                if (weeksDifference < 1) {
+                    document.getElementById('mensagemCupom').innerText = "O cupom já foi utilizado esta semana e está expirado.";
+                    document.getElementById('cupomForm').style.display = 'none'; // Esconde o formulário
+                }
+            }
+
+            // Carregar cupons disponíveis
+            const cuponsDisponiveis = JSON.parse(localStorage.getItem("coupons")) || {};
+            const cupomLista = document.getElementById('cupomLista');
+
+            for (const [codigo, dados] of Object.entries(cuponsDisponiveis)) {
+                const cupomDiv = document.createElement('div');
+                cupomDiv.className = 'cupom';
+                cupomDiv.innerHTML = `<p><strong>${codigo}</strong> - ${dados.discount}% de desconto</p>`;
+                cupomLista.appendChild(cupomDiv);
+            }
+
+            document.getElementById('cupomForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const codigo = document.getElementById('codigoCupom').value.trim();
+                const resultado = document.getElementById('resultado');
+
+                if (cuponsDisponiveis[codigo] && cuponsDisponiveis[codigo].active) {
+                    resultado.textContent = `Cupom aplicado: ${cuponsDisponiveis[codigo].discount}% de desconto.`;
+                    resultado.style.color = 'green';
+                    
+                    // Salva o cupom e a data atual no localStorage
+                    localStorage.setItem('appliedCoupon', codigo);
+                    localStorage.setItem('lastUsedDate', currentDate.toISOString());
+                } else {
+                    resultado.textContent = 'Cupom inválido ou inativo. Tente novamente.';
+                    resultado.style.color = 'red';
+                }
+
+                // Limpa o campo de entrada
+                document.getElementById('codigoCupom').value = '';
+            });
+        });
+    </script>
+</body>
+</html>
